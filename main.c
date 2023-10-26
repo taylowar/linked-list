@@ -6,8 +6,6 @@
 // !! printf must be adjusted !!
 #define LL_VAL size_t 
 
-#define LL_PRINT "%zu" 
-
 typedef struct _list {
     LL_VAL val;
     struct _list *next;
