@@ -1,6 +1,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 // Defines the type of the linked list node value 
 // !! printf must be adjusted !!
@@ -29,7 +30,6 @@ void ll_print_rec(LinkedList ll, size_t f)
     } else {
         printf("->%zu", ll.val);
     }
-    
     if (ll.next != NULL) {
         ll_print_rec(*ll.next, ++f);
     } else {
@@ -66,6 +66,21 @@ void ll_push(LinkedList *ll, LL_VAL val)
     ll_add_node(ll, nl);
 }
 
+
+void ll_delete(LinkedList *ll,LL_VAL val)
+{
+    if (ll->next == NULL) {
+        fprintf(stderr, "[ERROR]: unable to find value `%zu`\n", val);
+        return;
+    }
+    LinkedList next = *ll->next;
+    if (next.val == val) {
+        ll->next = next.next;
+        return;
+    }
+    return ll_delete(ll->next, val);
+}
+
 int main()
 {
     
@@ -74,6 +89,8 @@ int main()
     for (size_t i = 1; i < 10; ++i) {
         ll_push(&lh, i);
     }
+    ll_delete(&lh, 4);
+    ll_delete(&lh, 9);
 
     ll_print(lh);
 
